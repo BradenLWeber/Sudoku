@@ -154,8 +154,8 @@ def only_possible():
 								possible[row][column] = [i]
 								
 def only_possible_line():
-	'''Looks in each quadrant for numbers that can only possibly be in a certain column or row
-	If so, deletes said number from every other box in the column or row
+	'''Looks in each quadrant for numbers that can only possibly be in a certain column or row in that quadrant
+	If so, deletes said number from every other possibility in other quadrants from the column or row
 	'''
 	
 	for rows in [range(3), range(3, 6), range(6, 9)]:
