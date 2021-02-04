@@ -1,7 +1,7 @@
 ''' Solves a sudoku board using human methods
 To test any board in the code, edit the name of it 'board' '''
 
-board =						[[0, 0, 0, 7, 0, 0, 0, 0, 0], 
+board =					[[0, 0, 0, 7, 0, 0, 0, 0, 0], 
 						[1, 0, 0, 0, 0, 0, 0, 0, 0], 
 						[0, 0, 0, 4, 3, 0, 2, 0, 0], 
 						[0, 0, 0, 0, 0, 0, 0, 0, 6], 
@@ -10,7 +10,7 @@ board =						[[0, 0, 0, 7, 0, 0, 0, 0, 0],
 						[0, 0, 0, 0, 8, 1, 0, 0, 0], 
 						[0, 0, 2, 0, 0, 0, 0, 5, 0], 
 						[0, 4, 0, 0, 0, 0, 3, 0, 0]]
-boardtest =					[[0, 1, 0, 0, 0, 0, 0, 0, 0], 
+boardtest =				[[0, 1, 0, 0, 0, 0, 0, 0, 0], 
 						[0, 2, 0, 0, 5, 0, 0, 8, 0], 
 						[0, 3, 4, 0, 0, 0, 0, 7, 0], 
 						[0, 0, 6, 0, 0, 0, 0, 2, 0], 
@@ -19,7 +19,7 @@ boardtest =					[[0, 1, 0, 0, 0, 0, 0, 0, 0],
 						[0, 7, 2, 1, 0, 0, 5, 0, 0], 
 						[0, 0, 0, 0, 0, 0, 0, 0, 0], 
 						[0, 0, 0, 0, 0, 0, 0, 0, 6]]
-boardeasy =  					[[0, 3, 0, 0, 1, 0, 0, 6, 0], 
+boardeasy =  			[[0, 3, 0, 0, 1, 0, 0, 6, 0], 
 						[7, 5, 0, 0, 3, 0, 0, 4, 8], 
 						[0, 0, 6, 9, 0, 4, 3, 0, 0], 
 						[0, 0, 3, 0, 0, 0, 8, 0, 0], 
@@ -28,7 +28,7 @@ boardeasy =  					[[0, 3, 0, 0, 1, 0, 0, 6, 0],
 						[0, 0, 0, 6, 7, 5, 2, 0, 0], 
 						[6, 8, 0, 0, 9, 0, 0, 1, 5], 
 						[0, 9, 0, 0, 4, 0, 0, 3, 0]]
-boardimpossible= 				[[8, 0, 0, 0, 0, 0, 0, 0, 0], 
+boardimpossible= 		[[8, 0, 0, 0, 0, 0, 0, 0, 0], 
 						[0, 0, 3, 6, 0, 0, 0, 0, 0], 
 						[0, 7, 0, 0, 9, 0, 2, 0, 0], 
 						[0, 5, 0, 0, 0, 7, 0, 0, 0], 
@@ -38,7 +38,7 @@ boardimpossible= 				[[8, 0, 0, 0, 0, 0, 0, 0, 0],
 						[0, 0, 8, 5, 0, 0, 0, 1, 0], 
 						[0, 9, 0, 0, 0, 0, 4, 0, 0]]
 						
-possible = [[[1, 2, 3, 4, 5, 6, 7, 8, 9] for i in range(9)] for i in range(9) ]
+possible = [[[1, 2, 3, 4, 5, 6, 7, 8, 9] for _ in range(9)] for _ in range(9) ]
 
 def actual_to_possible():
 	'''Checks all board values, and if they are non-zero, deletes all possibilities except the actual
@@ -154,8 +154,8 @@ def only_possible():
 								possible[row][column] = [i]
 								
 def only_possible_line():
-	'''Looks in each quadrant for numbers that can only possibly be in a certain column or row in that quadrant
-	If so, deletes said number from every other possibility in other quadrants from the column or row
+	'''Looks in each quadrant for numbers that can only possibly be in a certain column or row
+	If so, deletes said number from every other box in the column or row
 	'''
 	
 	for rows in [range(3), range(3, 6), range(6, 9)]:
@@ -180,13 +180,13 @@ def only_possible_line():
 				if i_counts.count(0) == 2:
 					# index of i determines which row to use in rows
 					ro = i_counts.index(max(i_counts))
-				# Now take that i out of every possibility in that row except the ones in the quadrant
-				for column in range(9):
-					if column not in columns:
-						try:
-							possible[row[ro]][column].remove(i)
-						except:
-							pass
+					# Now take that i out of every possibility in that row except the ones in the quadrant
+					for column in range(9):
+						if column not in columns:
+							try:
+								possible[row[ro]][column].remove(i)
+							except:
+								pass
 							
 				# i_count is counting how many times a number i appears in each possibilities of each column
 				i_count_1 = 0
@@ -205,14 +205,14 @@ def only_possible_line():
 				if max(i_counts) == 1:
 					continue
 				if i_counts.count(0) == 2:
-					col = i_counts.index(max(counts))
-				# now take i out of the possiblities in that column except ones in the quadrant
-				for row in range(9):
-					if row not in rows:
-						try:
-							possible[row][columns[col]].remove(i)
-						except:
-							pass
+					col = i_counts.index(max(i_counts))
+				# now take i out of the possibilities in that column except ones in the quadrant
+					for row in range(9):
+						if row not in rows:
+							try:
+								possible[row][columns[col]].remove(i)
+							except:
+								pass
 					
 def check_twins_and_triplets():
 	'''Checks each quadrant, row, and column for a pair of numbers that have only two
@@ -300,9 +300,9 @@ def twin_row_recursion(twins, row, pivot):
 			for column in range(9):
 				if check_twins[0] in possible[row][column]:
 					possible[row][column] = [check_twins[0], check_twins[1]]
-	# Once we've tried all the combinations, recursion stops'
+	# Once we've tried all the combinations, recursion stops
 	if pivot != 1:
-		twin_row_recursion(twins, column, pivot - 1)
+		twin_row_recursion(twins, row, pivot - 1)
 
 def twin_column_recursion(twins, column, pivot):
 	'''This checks each combination of twins to see if any have the same location
